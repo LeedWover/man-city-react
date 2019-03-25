@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Button } from '@material-ui/core';
 
-import CityLogo from '../utils/Icons';
+import { CityLogo } from '../utils/Icons';
 
 class Header extends Component {
   render() {

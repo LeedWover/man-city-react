@@ -1,10 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-import { CityLogo } from '../utils/Icons'
+import { CityLogo } from '../utils/Icons';
 
 const Footer = props => {
   return (
-    <footer className="bck_blue">
+    <footer
+      className="bck_blue"
+      /*style={{
+        position: 'fixed',
+        bottom: 0,
+        width: '100%'
+      }} */
+    >
       <div className="footer_logo">
         <CityLogo
           width="70px"

@@ -12,7 +12,7 @@ export const CityLogo = props => {
       background: `url(${MCityLogo}) no-repeat`
     }}
   ></div>
-  
+
   if(props.link) {
     return (
       <Link to={props.linkTo} className="link_logo">
@@ -23,5 +23,3 @@ export const CityLogo = props => {
     return template
   }
 }
-
-export default CityLogo;
