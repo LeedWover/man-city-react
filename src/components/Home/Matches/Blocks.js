@@ -3,7 +3,7 @@ import { Slide } from 'react-reveal';
 
 import { firebaseMatches } from '../../../firebase';
 import MatchBlock from '../../utils/MatchesBlock';
-import { firebaseLooper, reverseArray } from '../../utils/Misc';
+import { firebaseLooper, /*reverseArray*/ } from '../../utils/Misc';
 
 class Blocks extends Component {
   
@@ -17,7 +17,8 @@ class Blocks extends Component {
         const matches = firebaseLooper(snapshot);
         
         this.setState({
-          matches: reverseArray(matches)
+          //matches: reverseArray(matches)
+          matches: matches.reverse()
         })
       });
   }

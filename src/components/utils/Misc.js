@@ -9,6 +9,7 @@ export const Tag = props => {
         backgroundColor: props.background,
         fontSize: props.size,
         color: props.color,
+        ...props.add,
         fontFamily: 'Righteous',
         display: 'inline-block',
         padding: '5px 10px'
@@ -16,7 +17,7 @@ export const Tag = props => {
     >{props.children}</div>
   )
 
-  if(props.link) {
+  if(props.linkTo) {
     return (
       <Link to={props.linkTo}>
         {template}
@@ -39,11 +40,11 @@ export const firebaseLooper = snapshot => {
   return data;
 }
 
-export const reverseArray = actualArray => {
-  let reversedArray = [];
+// export const reverseArray = actualArray => {
+//   let reversedArray = [];
 
-  for(let i = actualArray.length - 1; i >= 0; i--) {
-    reversedArray.push(actualArray[i]);
-  }
-  return reversedArray;
-}
+//   for(let i = actualArray.length - 1; i >= 0; i--) {
+//     reversedArray.push(actualArray[i]);
+//   }
+//   return reversedArray;
+// }
