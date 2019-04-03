@@ -1,15 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import './firebase';
-import App from './App';
+import { firebase } from "./firebase";
+import App from "./App";
 
-const app = (
+const AppEntry = props => (
   <Router>
-    <App />
+    <App {...props} />
   </Router>
 )
 
-ReactDOM.render(app, document.getElementById('root'));
-
+firebase.auth().onAuthStateChanged(user => {
+  ReactDOM.render(<AppEntry user={user} />, document.getElementById("root"));
+});

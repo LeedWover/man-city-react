@@ -78,7 +78,6 @@ class SignIn extends Component {
           this.props.history.push('/dashboard');
         })
         .catch(err => {
-          console.log(err)
           this.setState({
             formError: true,
             formErrorMessage: err.message
