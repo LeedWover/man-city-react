@@ -111,10 +111,10 @@ class SignIn extends Component {
               formData={this.state.formData.password}
               change={element => this.updateForm(element)}
             />
+            <button>Login</button>
             {this.state.formError ? (
               <div className="error_label">{this.state.formErrorMessage ? <div>{this.state.formErrorMessage}</div> :'Something went wrong!'}</div>
             ) : null}
-            <button>Login</button>
           </form>
         </div>
       </div>

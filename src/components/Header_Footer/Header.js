@@ -1,17 +1,30 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Button, ListItem } from "@material-ui/core";
+import { AppBar, Toolbar, Button, Menu, MenuItem } from "@material-ui/core";
 
-import { firebase } from '../../firebase';
+import { firebase } from "../../firebase";
 import { CityLogo } from "../utils/Icons";
 
 class Header extends Component {
+  state = {
+    anchorEl: null
+  };
+
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   logoutHandler = () => {
     firebase
       .auth()
       .signOut()
       .then(() => {
         console.log("Logged out");
+        this.handleClose()
       })
       .catch(err => {
         console.log(err);
@@ -19,6 +32,28 @@ class Header extends Component {
   };
 
   render() {
+    let dropdown = (
+      <div>
+        <Button
+          color="inherit"
+          aria-owns={this.state.anchorEl ? "simple-menu" : undefined}
+          aria-haspopup="true"
+          onClick={this.handleClick}
+        >
+          Profile
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={this.state.anchorEl}
+          open={Boolean(this.state.anchorEl)}
+          onClose={this.handleClose}
+        >
+          <MenuItem onClick={this.handleClose}><Link to="/dashboard">Dashboard</Link></MenuItem>
+          <MenuItem onClick={this.logoutHandler}>Logout</MenuItem>
+        </Menu>
+      </div>
+    );
+
     return (
       <AppBar
         position="fixed"
@@ -46,9 +81,10 @@ class Header extends Component {
             <Button color="inherit">Matches</Button>
           </Link>
           {this.props.user ? (
-            <Button onClick={this.logoutHandler} color="inherit">
-              Logout
-            </Button>
+            // <Button onClick={this.logoutHandler} color="inherit">
+            //   Logout
+            // </Button>
+            dropdown
           ) : (
             <Link to="/sign_in">
               <Button color="inherit">Login</Button>
