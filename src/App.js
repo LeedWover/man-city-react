@@ -12,7 +12,7 @@ import Dashboard from "./components/Admin/Dashboard";
 const App = props => {
   console.log(props.user)
   return (
-    <Layout>
+    <Layout user={props.user}>
       <Switch>
         <PrivateRoutes {...props} exact path="/dashboard" component={Dashboard} />
         <PublicRoutes {...props} restricted={false} exact path="/" component={Home} />
