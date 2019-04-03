@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/firebase-auth';
 
 import config from './firebaseConfig';
 

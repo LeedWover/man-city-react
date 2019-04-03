@@ -119,7 +119,7 @@ class Enroll extends Component {
               />
               <div className="success_label">{this.state.formSuccess}</div>
               <button>Enroll</button>
-              <div className="enroll_discl">Lorem ipsum dolor fndsaj afkamacacasc sadmakaf.</div>
+              <div className="enroll_discl">Lorem ipsum dolor fessaj akamacare sadmaka.</div>
             </div>
           </form>
         </div>
