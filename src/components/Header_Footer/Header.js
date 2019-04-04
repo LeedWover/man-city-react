@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { AppBar, Toolbar, Button, Menu, MenuItem } from "@material-ui/core";
 
 import { firebase } from "../../firebase";
@@ -17,6 +17,11 @@ class Header extends Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
+
+  openDashboard = () => {
+    this.props.history.push('/dashboard');
+    this.handleClose();
+  }
 
   logoutHandler = () => {
     firebase
@@ -47,12 +52,11 @@ class Header extends Component {
           open={Boolean(this.state.anchorEl)}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}><Link to="/dashboard">Dashboard</Link></MenuItem>
+          <MenuItem onClick={this.openDashboard}>Dashboard</MenuItem>
           <MenuItem onClick={this.logoutHandler}>Logout</MenuItem>
         </Menu>
       </div>
     );
-
     return (
       <AppBar
         position="fixed"
@@ -92,4 +96,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
