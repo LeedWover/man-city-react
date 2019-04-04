@@ -23,7 +23,6 @@ class Header extends Component {
       .auth()
       .signOut()
       .then(() => {
-        console.log("Logged out");
         this.handleClose()
       })
       .catch(err => {
@@ -32,7 +31,7 @@ class Header extends Component {
   };
 
   render() {
-    let dropdown = (
+    let profileDropdown = (
       <div>
         <Button
           color="inherit"
@@ -81,10 +80,7 @@ class Header extends Component {
             <Button color="inherit">Matches</Button>
           </Link>
           {this.props.user ? (
-            // <Button onClick={this.logoutHandler} color="inherit">
-            //   Logout
-            // </Button>
-            dropdown
+            profileDropdown
           ) : (
             <Link to="/sign_in">
               <Button color="inherit">Login</Button>
