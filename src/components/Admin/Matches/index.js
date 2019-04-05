@@ -18,6 +18,12 @@ class AdminMatches extends Component {
     firebaseMatches.once("value").then(snapshot => {
       const matches = firebaseLooper(snapshot);
 
+      matches.sort((a,b) => {
+        const dateOne = new Date(a.date);
+        const dateTwo = new Date(b.date);
+        return dateTwo - dateOne;
+      });
+
       this.setState({
         isLoading: false,
         matches: matches.reverse()
