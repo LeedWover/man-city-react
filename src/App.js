@@ -17,6 +17,7 @@ const App = props => {
       <Switch>
         <PrivateRoutes {...props} exact path="/dashboard" component={Dashboard} />
         <PrivateRoutes {...props} exact path="/admin_matches" component={AdminMatches} />
+        <PrivateRoutes {...props} exact path="/admin_matches/edit_match" component={AddEditMatch} />
         <PrivateRoutes {...props} exact path="/admin_matches/edit_match/:id" component={AddEditMatch} />
         <PublicRoutes {...props} restricted={false} exact path="/" component={Home} />
         <PublicRoutes {...props} restricted={true} exact path="/sign_in" component={SignIn} />

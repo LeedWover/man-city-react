@@ -21,12 +21,12 @@ class AdminMatches extends Component {
       matches.sort((a,b) => {
         const dateOne = new Date(a.date);
         const dateTwo = new Date(b.date);
-        return dateTwo - dateOne;
+        return dateOne - dateTwo;
       });
 
       this.setState({
         isLoading: false,
-        matches: matches.reverse()
+        matches
       })
     });
   }

@@ -215,6 +215,8 @@ class AddEditMatch extends Component {
       formIsValid = this.state.formData[key].valid && formIsValid;
     }
 
+
+
     this.state.teams.forEach(team => {
       if(team.shortName === dataToSubmit.local) {
         dataToSubmit['localThmb'] = team.thmb
@@ -237,7 +239,15 @@ class AddEditMatch extends Component {
             });
           });
       } else {
-
+        firebaseMatches.push(dataToSubmit)
+          .then(() => {
+            this.props.history.push('/admin_matches')
+          })
+          .catch(err => {
+            this.setState({
+              formError: true
+            })
+          })
       }
     } else {
       this.setState({
@@ -267,7 +277,7 @@ class AddEditMatch extends Component {
     }
     
     if(!matchId) {
-
+      getTeams(false, 'Add Match')
     } else {
       firebaseDB.ref(`matches/${matchId}`).once('value')
         .then(snapshot => {
@@ -359,7 +369,7 @@ class AddEditMatch extends Component {
               {this.state.formError ? <div className="error_label">Something went wrong!</div> : null}
               <div className="admin_submit">
                 <button onClick={event => this.submitForm(event)}>
-                  {this.state.formType} Test 
+                  {this.state.formType}
                 </button>
               </div>
             </form>
