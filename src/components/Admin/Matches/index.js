@@ -32,7 +32,6 @@ class AdminMatches extends Component {
   }
 
   render() {
-    console.log(this.state.matches)
     return (
       <AdminLayout>
         <div>
