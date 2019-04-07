@@ -29,7 +29,7 @@ class AddEditPlayer extends Component {
         validationMessage: "",
         showLabel: true
       },
-      lastName: {
+      lastname: {
         element: "input",
         value: "",
         config: {
@@ -86,17 +86,21 @@ class AddEditPlayer extends Component {
         validation: {
           required: true
         },
-        valid: true
+        valid: false
       }
     }
   };
 
-  updateForm = element => {
+  updateForm = (element, content = '') => {
     const { id, event } = element;
     const newFormData = { ...this.state.formData };
     const newElement = { ...newFormData[id] };
 
-    newElement.value = event.target.value;
+    if(content === '') {
+      newElement.value = event.target.value;
+    } else {
+      newElement.value = content
+    } 
 
     let validData = Validate(newElement);
     newElement.valid = validData[0];
@@ -108,6 +112,18 @@ class AddEditPlayer extends Component {
       formData: newFormData
     });
   };
+
+  successForm = message => {
+    this.setState({
+      formSuccess: message
+    })
+    setTimeout(() => {
+      this.setState({
+        formSuccess: ''
+      });
+      this.props.history.push('/admin_players')
+    }, 2000)
+  }
 
   submitForm = event => {
     event.preventDefault();
@@ -121,6 +137,28 @@ class AddEditPlayer extends Component {
     }
 
     if (formIsValid) {
+      if(this.state.formType === 'Edit player') {
+        firebaseDB.ref(`players/${this.state.playerId}`)
+          .update(dataToSubmit)
+          .then(() => {
+            this.successForm('Updated!')
+          })
+          .catch(err => {
+            this.setState({
+              formError: true
+            })
+          })
+      } else {
+        firebasePlayers.push(dataToSubmit)
+          .then(() => {
+            this.props.history.push('/admin_players')
+          })
+          .catch(err => {
+            this.setState({
+              formError: true
+            })
+          })
+      }
     } else {
       this.setState({
         formError: true
@@ -129,11 +167,32 @@ class AddEditPlayer extends Component {
   };
 
   resetImage = () => {
+    const newFormData = {...this.state.formData}
+    newFormData['image'].value = '';
+    newFormData['image'].valid = false;
 
+    this.setState({
+      defaultImg: '',
+      formData: newFormData
+    });
   }
 
   storeFilename = filename => {
+    this.updateForm({id:'image'}, filename)
+  }
 
+  updateFields = (player, playerId, formType, image) => {
+    const newFormData = {...this.state.formData}
+    for(let key in newFormData) {
+      newFormData[key].value = player[key];
+      newFormData[key].valid = true;
+    }
+    this.setState({
+      playerId,
+      defaultImg: image,
+      formType,
+      formData: newFormData
+    })
   }
 
   componentDidMount() {
@@ -144,6 +203,15 @@ class AddEditPlayer extends Component {
         formType: "Add Player"
       });
     } else {
+      firebaseDB.ref(`players/${playerId}`).once('value')
+        .then(snapshot => {
+          const playerData = snapshot.val();
+
+          firebase.storage().ref('players').child(playerData.image).getDownloadURL()
+            .then( url => {
+              this.updateFields(playerData, playerId, 'Edit player', url)
+            });
+        });
     }
   }
 
@@ -169,8 +237,8 @@ class AddEditPlayer extends Component {
                 change={element => this.updateForm(element)}
               />
               <FormField
-                id="lastName"
-                formData={this.state.formData.lastName}
+                id="lastname"
+                formData={this.state.formData.lastname}
                 change={element => this.updateForm(element)}
               />
               <FormField
